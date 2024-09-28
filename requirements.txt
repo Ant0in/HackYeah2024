@@ -1,3 +1,5 @@
 networkx
 beautifulsoup4
 flask
+scikit-learn
+nltk
