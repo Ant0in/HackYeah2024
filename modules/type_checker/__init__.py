@@ -6,13 +6,14 @@ from modules.type_checker.tfidf import TFIDF
 
 class ThemeChecker:
 
-    def __init__(self, lang: str = 'english') -> None:
+    def __init__(self, url: str, lang: str = 'english') -> None:
         
+        self.url: str = url
         self.language: str = lang
 
     def run(self, dependencies: list) -> set:
 
-        raw_doc: list[str] = dependencies[0]
+        raw_doc: str = dependencies[0][self.url]
 
         _ncomp: int = 5; _nbest: int = 2
         ret: list = list()

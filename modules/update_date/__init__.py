@@ -33,5 +33,5 @@ class UpdateDateModule:
         # Calculer le nombre de jours entre ces deux dates
         return {
             'score': -math.exp(-((delta.days/100)**2)) + 1,
-            'last_update': last_update
+            'last_update': last_update.date().strftime('%d.%m.%Y')
         }
