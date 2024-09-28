@@ -1,15 +1,17 @@
+
+
 import requests
 import re
 
+
 class MediaModule:
-    def __init__(self, name, dependencies):
-        self.name = name
-        self.dependencies = dependencies
 
-    def run(self):
-        url = self.dependencies["url"]
-        soup = self.dependencies["HTMLParser"][url]
+    def __init__(self, url: str) -> None:
+        self.url = url
 
+    def run(self, dependencies: list | None = None) -> object:
+
+        soup = dependencies[0]['pages'][self.url]
         keywords = ["instagram", "facebook", "twitter"]
         links = []
 
@@ -20,9 +22,14 @@ class MediaModule:
                     break
 
 
-        regexes = ["(https?:\/\/)?(www\.)?instagram\.com\/[A-Za-z0-9_.]+\/?", "(https?:\/\/)?(www\.)?facebook\.com\/[A-Za-z0-9_.]+\/?", "(https?:\/\/)?(www\.)?twitter\.com\/[A-Za-z0-9_.]+\/?"]
+        regexes = [
+            r"(https?:\/\/)?(www\.)?instagram\.com\/[A-Za-z0-9_.]+\/?", 
+            r"(https?:\/\/)?(www\.)?facebook\.com\/[A-Za-z0-9_.]+\/?", 
+            r"(https?:\/\/)?(www\.)?twitter\.com\/[A-Za-z0-9_.]+\/?"
+        ]
+        
         for link in links:
             if not any(re.match(regex, link) for regex in regexes):
-                return 0
+                return {'score': 0}
             
-        return 1
+        return {'score': 1}

@@ -3,29 +3,28 @@ from bs4 import BeautifulSoup
 
 class HTMLParserModule:
 
-    def __init__(self, name, dependencies):
-        self.name = name
-        self.dependencies = dependencies
-    
-    
-    def run(self):
-        base_url = self.dependencies["url"]
-        pages_dict = {base_url: self.parse_page(base_url)}
-        for link in pages_dict[base_url].find_all("a", href=True):
+    def __init__(self, url: str) -> None:
+        
+        self.url: str = url
+        
+    def run(self, dependencies: list | None = None):
+
+        pages_dict = {self.url: self.parse_page(self.url)}
+        for link in pages_dict[self.url].find_all("a", href=True):
 
             # If link starts with the base url then adds it to the dict
-            if str(link["href"]).startswith(base_url):
+            if str(link["href"]).startswith(self.url):
                 pages_dict[link["href"]] = self.parse_page(link["href"])
 
             # If link is relative
             if str(link["href"]).startswith("/"):
-                absolute_link = base_url + link["href"][1:]
+                absolute_link = self.url + link["href"][1:]
                 pages_dict[absolute_link] = self.parse_page(absolute_link)
 
             if len(pages_dict) >= 10:
                 break
 
-        return pages_dict
+        return {'pages': pages_dict}
 
     def get_text(self, url):
         r = requests.get(url)

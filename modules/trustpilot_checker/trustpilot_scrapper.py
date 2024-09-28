@@ -39,7 +39,7 @@ class TrustPilotScraper:
     @staticmethod
     def _extract_rating_info(soup: BeautifulSoup) -> Dict[str, Optional[int]]:
         
-        ret: Dict[str, Optional[int]] = {'note': None, 'ratings': None}
+        ret: Dict[str, Optional[int]] = {'note': 0.5, 'ratings': 0}
 
         rating = soup.select_one('#business-unit-title > div > div > p')
         number_of_ratings = soup.select_one('#business-unit-title > span.styles_clickable__zQWyh > span')
