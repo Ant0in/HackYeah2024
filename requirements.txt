@@ -4,3 +4,4 @@ flask
 scikit-learn
 nltk
 requests
+selenium

@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-class HTMLParserModule(Module):
+class HTMLParserModule:
 
     def __init__(self, name, dependencies):
         self.name = name
