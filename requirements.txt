@@ -5,4 +5,5 @@ scikit-learn
 nltk
 requests
 selenium
-whois
+python-whois
+pydot

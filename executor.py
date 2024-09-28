@@ -9,8 +9,8 @@ class Executor:
         for module_name in execution_order:
             module = modules[module_name]
             # Gather inputs from dependencies
-            dependencies_data = {dep: self.results[dep] for dep in pipeline.get_dependencies(module_name)}
-            
+            dependencies_data = [self.results[x] for x in pipeline.get_dependencies(module_name)]
+
             # Run the module and store the result
             result = module.run(dependencies_data)
             self.results[module_name] = result
