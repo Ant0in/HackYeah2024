@@ -55,10 +55,3 @@ class ThemeChecker:
         return result
 
 
-
-
-if __name__ == '__main__':
-    
-    raw: list[str] = [
-        "le chat est très mignon les chats aiment les croquettes j'aime mon chat qui est vraiment adorable le chien est aussi un bon animal de compagnie les animaux aiment jouer dans le parc"
-    ]
