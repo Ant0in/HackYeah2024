@@ -10,7 +10,7 @@ from networkx.drawing.nx_pydot import write_dot
 
 
 pipeline = Pipeline()
-pipeline.add_module("TrustPilotChecker", [])
+#pipeline.add_module("TrustPilotChecker", [])
 pipeline.add_module("LegalChecker", [])
 pipeline.add_module("WhoIS", [])
 pipeline.add_module("UpdateDate", ["WhoIS"])
@@ -18,10 +18,11 @@ pipeline.add_module("UpdateDate", ["WhoIS"])
 write_dot(pipeline.graph, "test.dot")
 
 
-url: str = 'https://google.com'
+url: str = 'https://hackyeah.pl/'
+url: str = 'google.com'
 
 module_list = {
-    "TrustPilotChecker": TrustPilotReviews(url),
+    #"TrustPilotChecker": TrustPilotReviews(url),
     "LegalChecker": LegalKeywordsChecker(url),
     "WhoIS": WhoisLookupModule(url),
     "UpdateDate": UpdateDateModule(),
