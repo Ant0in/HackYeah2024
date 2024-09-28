@@ -15,5 +15,5 @@ class TrustPilotReviews:
 
 if __name__ == '__main__':
     
-    url = 'www.google.com'
+    url = 'http://google.com'
     print(TrustPilotReviews(dependencies=..., url=url).run())
