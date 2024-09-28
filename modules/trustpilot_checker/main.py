@@ -16,5 +16,5 @@ class TrustPilotReviews:
 
 if __name__ == '__main__':
     
-    url: str = 'one-time-offer.com'
+    url = 'www.dolcevitashoessouthafrica.com'
     print(TrustPilotReviews(name='TrustPilotReviews', dependencies=..., url=url).run())
