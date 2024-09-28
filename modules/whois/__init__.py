@@ -10,4 +10,4 @@ class WhoisLookupModule:
     def run(self, dependencies: list = None) -> ...:
         # Fetch WHOIS data from the DNS
         w = whois.whois(self.url)
-        return [w]
+        return w
