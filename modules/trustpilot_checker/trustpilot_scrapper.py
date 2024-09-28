@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 from typing import Optional, Dict
+from urllib.parse import urlparse
 
 
 class TrustPilotScraper:
@@ -9,11 +10,21 @@ class TrustPilotScraper:
     REVIEW_URL: str = 'https://trustpilot.com/review/'
     
     @staticmethod
+    def parse_url(url: str) -> str:
+        
+        parsed: object = urlparse(url)
+        netloc: str = parsed.netloc
+        if not netloc.startswith('www.'): netloc = 'www.' + netloc
+        return netloc
+
+    @staticmethod
     def scrape_trustpilot(url: str) -> Optional[Dict[str, Optional[int]]]:
 
         headers: dict = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
         }
+
+        url = TrustPilotScraper.parse_url(url=url)
         
         try:
             response: requests.Response = requests.get(TrustPilotScraper.REVIEW_URL + url, headers=headers)
@@ -44,5 +55,11 @@ class TrustPilotScraper:
                 ret['ratings'] = int(number)
 
         return ret
+    
+
+if __name__ == '__main__':
+    
+    url: str = "https://docs.python.org/3/library/urllib.parse.html"
+    TrustPilotScraper.parse_url(url=url)
 
 
