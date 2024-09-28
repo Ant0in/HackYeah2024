@@ -11,7 +11,7 @@ class UpdateDateModule:
         whois_dep = dependencies[0]
         
         last_update: datetime.date = whois_dep["updated_date"] 
-        now = datetime.date.today()
+        now = datetime.datetime.now()
         delta = now - last_update
         # Get number of days between those two dates
         return {
