@@ -11,7 +11,7 @@ class MediaModule:
 
     def run(self, dependencies: list | None = None) -> object:
 
-        soup = dependencies[0][self.url]
+        soup = dependencies[0]['pages'][self.url]
         keywords = ["instagram", "facebook", "twitter"]
         links = []
 

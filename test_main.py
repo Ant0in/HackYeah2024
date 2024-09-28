@@ -19,7 +19,7 @@ pipeline.add_module('HTMLTextModule', ['HTMLParser'])
 pipeline.add_module("LegalChecker", [])
 pipeline.add_module("MediaModule", ["HTMLParser"])
 # rev image
-#pipeline.add_module("TrustPilotChecker", [])
+#pipeline.add_module("TrustPilotChecker", ["HTMLTextModule"])
 pipeline.add_module('ThemeChecker', ["HTMLTextModule"])
 pipeline.add_module("UpdateDate", ["WhoIS"])
 pipeline.add_module("WhoIS", [])

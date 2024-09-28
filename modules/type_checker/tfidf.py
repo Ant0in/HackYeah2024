@@ -29,9 +29,13 @@ class TFIDF:
     @staticmethod
     def get_stopwords(lang: str) -> list[str]:
         # Get the stopwords to ignore from given language 'lang'.
-        stw: list[str] = nltk.corpus.stopwords.words(lang)
-        return stw
+        try:
+            #TFIDF.download_NLTKstopwords()
+            stw: list[str] = nltk.corpus.stopwords.words(lang)
+            return stw
+        except: return 'english'
     
+    @staticmethod
     def download_NLTKstopwords() -> None:
         # Download the NLTK stopwords. Call only if not downloaded.
         nltk.download('stopwords')

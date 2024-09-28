@@ -13,7 +13,7 @@ class UpdateDateModule:
 
     def run(self, dependencies: list):
         
-        whois_dep = dependencies[0]
+        whois_dep = dependencies[0]['whois']
         last_update: list | str = whois_dep.get('updated_date')
 
         if isinstance(last_update, list): last_update = last_update[-1]

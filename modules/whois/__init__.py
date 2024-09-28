@@ -11,7 +11,7 @@ class WhoisLookupModule:
     def __init__(self, url: str) -> None:
         self.url: str = url
 
-    def run(self, dependencies: list = None) -> ...:
+    def run(self, dependencies: list = None) -> dict:
         # Fetch WHOIS data from the DNS
         w = whois.whois(self.url)
-        return w
+        return {'whois': w}

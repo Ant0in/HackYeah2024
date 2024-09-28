@@ -13,12 +13,14 @@ class ThemeChecker:
 
     def run(self, dependencies: list) -> set:
 
-        raw_doc: str = dependencies[0][self.url]
-
         _ncomp: int = 5; _nbest: int = 2
+
+        raw_str: str = dependencies[0]['parsed_pages'][self.url]
+        docs: list = ThemeChecker.split_string(raw_str, _ncomp)
         ret: list = list()
+        
         # Running TFIDF vectorization to get TFIDVcontainer object
-        _TFIDFcontainer = TFIDF.calculateTFIDF(doc_corpus=raw_doc, lang=self.language)
+        _TFIDFcontainer = TFIDF.calculateTFIDF(doc_corpus=docs, lang=self.language)
         # Using LDA and KMEANS algorithm to cluster the TFIDF vector
         _lda = Clustering.lda(TFIDF_matrix=_TFIDFcontainer.matrix, comp=_ncomp)
         _km = Clustering.kmeans(TFIDF_matrix=_TFIDFcontainer.matrix, comp=_ncomp)
@@ -32,17 +34,31 @@ class ThemeChecker:
             ret += [_TFIDFcontainer.terms[l] for l in ltop]
 
         return {'themes': frozenset(ret)}
+    
+    @staticmethod
+    def split_string(s: str, n: int) -> list:
+
+        words = s.split()
+        total_words = len(words)
+        
+        words_per_chunk = total_words // n
+        extra_words = total_words % n
+
+        result = []
+        start_index = 0
+
+        for i in range(n):
+            end_index = start_index + words_per_chunk + (1 if i < extra_words else 0)
+            result.append(" ".join(words[start_index:end_index]))
+            start_index = end_index
+
+        return result
+
 
 
 
 if __name__ == '__main__':
     
     raw: list[str] = [
-        "le chat est très mignon", 
-        "les chats aiment les croquettes",
-        "j'aime mon chat qui est vraiment adorable",
-        "le chien est aussi un bon animal de compagnie",
-        "les animaux aiment jouer dans le parc"
+        "le chat est très mignon les chats aiment les croquettes j'aime mon chat qui est vraiment adorable le chien est aussi un bon animal de compagnie les animaux aiment jouer dans le parc"
     ]
-
-    ...

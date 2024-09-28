@@ -24,7 +24,7 @@ class HTMLParserModule:
             if len(pages_dict) >= 10:
                 break
 
-        return pages_dict
+        return {'pages': pages_dict}
 
     def get_text(self, url):
         r = requests.get(url)
