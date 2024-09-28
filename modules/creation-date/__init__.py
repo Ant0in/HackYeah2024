@@ -1,4 +1,5 @@
 import bs4
+import whois
 
 class DateModule(Module):
 
@@ -6,5 +7,5 @@ class DateModule(Module):
         super().__init__(name, dependencies)
 
     def run(self):
-        soup  = dependencies["html-parser"]
-        soup.find_all("")
+        w = self.dependencies["whois"]
+        return w["creation_date"]
