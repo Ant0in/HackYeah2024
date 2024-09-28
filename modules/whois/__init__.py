@@ -1,8 +1,9 @@
 import whois
 
-class WhoisLookupModule(Module):
+class WhoisLookupModule:
     def __init__(self, name, dependencies=None):
-        super().__init__(name, dependencies)
+        self.name = name
+        self.dependencies = dependencies
 
     def run(self):
         # Fetch WHOIS data from the DNS

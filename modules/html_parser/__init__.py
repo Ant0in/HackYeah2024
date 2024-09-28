@@ -4,10 +4,10 @@ from bs4 import BeautifulSoup
 class HTMLParserModule(Module):
 
     def __init__(self, name, dependencies):
-        super().__init__(self, name, dependencies)
-        
-
-
+        self.name = name
+        self.dependencies = dependencies
+    
+    
     def run(self):
         base_url = self.dependencies["url"]
         pages_dict = {base_url: self.parse_page(base_url)}

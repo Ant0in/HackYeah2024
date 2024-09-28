@@ -1,10 +1,11 @@
 import datetime
 import math
 
-class UpdateDateModule(Module):
+class UpdateDateModule:
 
     def __init__(self, name, dependencies=None):
-        super().__init__(name, dependencies)
+        self.name = name
+        self.dependencies = dependencies
 
     def run(self):
         w = self.dependencies["whois"]
