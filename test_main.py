@@ -3,10 +3,12 @@ from modules.legal_keywords_checker import LegalKeywordsChecker
 from modules.trustpilot_checker import TrustPilotReviews
 from modules.whois import WhoisLookupModule
 from modules.update_date import UpdateDateModule
+from modules.media import MediaModule
+from modules.html_parser import HTMLParserModule
+
 
 from pipeline import Pipeline
 from executor import Executor
-from networkx.drawing.nx_pydot import write_dot
 
 
 pipeline = Pipeline()
@@ -14,18 +16,19 @@ pipeline = Pipeline()
 pipeline.add_module("LegalChecker", [])
 pipeline.add_module("WhoIS", [])
 pipeline.add_module("UpdateDate", ["WhoIS"])
+pipeline.add_module('HTMLParser', [])
+pipeline.add_module("MediaModule", ["HTMLParser"])
 
-write_dot(pipeline.graph, "test.dot")
 
-
-url: str = 'https://hackyeah.pl/'
-url: str = 'google.com'
+url: str = 'https://www.biedronka.pl/pl'
 
 module_list = {
     #"TrustPilotChecker": TrustPilotReviews(url),
     "LegalChecker": LegalKeywordsChecker(url),
     "WhoIS": WhoisLookupModule(url),
     "UpdateDate": UpdateDateModule(),
+    "HTMLParser": HTMLParserModule(url),
+    "MediaModule": MediaModule(url),
 }
 
 executor = Executor()

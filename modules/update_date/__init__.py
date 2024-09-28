@@ -3,6 +3,11 @@ import math
 
 class UpdateDateModule:
 
+    """
+    UpdateDate uses datetime lib to calculate last time the servers were
+    changed for given url. Provides a score and 'last_update' info.
+    """
+
     def __init__(self):
         ...
 
@@ -12,6 +17,7 @@ class UpdateDateModule:
         last_update: list | str = whois_dep.get('updated_date')
 
         if isinstance(last_update, list): last_update = last_update[-1]
+        elif isinstance(last_update, datetime) or isinstance(last_update, str): ...
         else: return {'score': 0.5}
 
         now = datetime.now(timezone.utc)
