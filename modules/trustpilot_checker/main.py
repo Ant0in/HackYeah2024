@@ -4,9 +4,8 @@ from trustpilot_scrapper import TrustPilotScraper
 
 class TrustPilotReviews:
 
-    def __init__(self, name: str, dependencies: list[str], url: str) -> None:
+    def __init__(self, dependencies: list[str], url: str) -> None:
         
-        self.name: str = name
         self.dependencies: list[str] = dependencies
         self.url: str = url
 
@@ -16,5 +15,5 @@ class TrustPilotReviews:
 
 if __name__ == '__main__':
     
-    url = 'www.dolcevitashoessouthafrica.com'
-    print(TrustPilotReviews(name='TrustPilotReviews', dependencies=..., url=url).run())
+    url = 'www.google.com'
+    print(TrustPilotReviews(dependencies=..., url=url).run())

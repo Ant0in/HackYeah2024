@@ -6,8 +6,9 @@ from tfidf import TFIDF
 
 class ThemeChecker:
 
-    def __init__(self, name: str, dependencies: list[str], raw: list[str], lang: str = 'english') -> None:
+    def __init__(self, dependencies: list[str], raw: list[str], lang: str = 'english') -> None:
         
+        self.dependencies: list[str] = dependencies
         self.raw_doc: list[str] = raw
         self.language: str = lang
 
@@ -44,4 +45,4 @@ if __name__ == '__main__':
         "les animaux aiment jouer dans le parc"
     ]
 
-    print(ThemeChecker(name='theme_checker', dependencies=..., raw=raw, lang='french').run())
+    print(ThemeChecker(dependencies=..., raw=raw, lang='french').run())
