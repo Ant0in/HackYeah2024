@@ -9,6 +9,9 @@ class Pipeline:
         if dependencies:
             for dep in dependencies:
                 self.graph.add_edge(dep, module_name)
+
+    def get_dependencies(self, module_name):
+        return list(self.graph.predecessors(module_name))
     
     def get_initial_modules(self):
         return [node for node in self.graph.nodes if self.graph.in_degree(node) == 0]
