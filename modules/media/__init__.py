@@ -23,13 +23,13 @@ class MediaModule:
 
 
         regexes = [
-            r"(https?:\/\/)?(www\.)?instagram\.com\/[A-Za-z0-9_.]+\/?", 
-            r"(https?:\/\/)?(www\.)?facebook\.com\/[A-Za-z0-9_.]+\/?", 
-            r"(https?:\/\/)?(www\.)?twitter\.com\/[A-Za-z0-9_.]+\/?"
+            r"(https:\/\/)?(www\.)?instagram\.com\/[A-Za-z0-9_.]+\/?", 
+            r"(https:\/\/)?(www\.)?facebook\.com\/[A-Za-z0-9_.]+\/?", 
+            r"(https:\/\/)?(www\.)?twitter\.com\/[A-Za-z0-9_.]+\/?"
         ]
         
         for link in links:
-            if not any(re.match(regex, link) for regex in regexes):
+            if not any(re.fullmatch(regex, link.strip()) for regex in regexes):
                 return {'score': 0}
             
         return {'score': 1}
