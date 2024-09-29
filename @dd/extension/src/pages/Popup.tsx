@@ -157,7 +157,7 @@ export default function () {
                       </div>
                     </TooltipTrigger>
                     <TooltipContent>
-                      <p>Trust: {`${score}%`}</p>
+                      <p>Trust: {`${score*100}%`}</p>
                     </TooltipContent>
                   </Tooltip>
                 ) : (baseUrl ? (
