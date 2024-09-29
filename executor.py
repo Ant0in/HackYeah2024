@@ -1,10 +1,17 @@
+
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from weighted_sum import WeightedSum
+
 
 class Executor:
-    def __init__(self):
-        self.results = {}
+    
+    def __init__(self) -> None:
+
+        self.results: dict = {}
+
 
     def run_pipeline(self, pipeline, modules):
+
         execution_order = pipeline.get_execution_order()  # Get topologically sorted order
         for module_name in execution_order:
             module = modules[module_name]
@@ -15,6 +22,9 @@ class Executor:
             result = module.run(dependencies_data)
             self.results[module_name] = result
             print(f"{module_name} completed with result: {result}")
+
+        exec_scores: dict = {m: self.results[m]['score'] for m in execution_order if self.results[m].get('score')}
+        return WeightedSum.calculateWeightedSum(scores=exec_scores)
 
 class ParallelExecutor:
     def __init__(self):

@@ -7,6 +7,7 @@ from modules.media import MediaModule
 from modules.html_parser import HTMLParserModule
 from modules.html_text import HTMLTextModule
 from modules.type_checker import ThemeChecker
+from modules.fraud_prediction import FraudPrediction
 
 from pipeline import Pipeline
 from executor import Executor
@@ -14,6 +15,7 @@ from executor import Executor
 
 
 pipeline = Pipeline()
+pipeline.add_module('FraudPrediction', [])
 pipeline.add_module('HTMLParser', [])
 pipeline.add_module('HTMLTextModule', ['HTMLParser'])
 pipeline.add_module("LegalChecker", [])
@@ -25,9 +27,10 @@ pipeline.add_module("UpdateDate", ["WhoIS"])
 pipeline.add_module("WhoIS", [])
 
 
-url: str = 'https://www.biedronka.pl/pl'
+url: str = 'https://www.penoblode.shop/'
 
 module_list = {
+    "FraudPrediction": FraudPrediction(url),
     "HTMLParser": HTMLParserModule(url),
     "HTMLTextModule": HTMLTextModule(url),
     "LegalChecker": LegalKeywordsChecker(url),
@@ -41,4 +44,5 @@ module_list = {
 
 
 executor = Executor()
-executor.run_pipeline(pipeline, module_list)
+score: float = executor.run_pipeline(pipeline, module_list)
+print(score)

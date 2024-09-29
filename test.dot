@@ -1,7 +1,0 @@
-strict digraph {
-TrustPilotChecker;
-LegalChecker;
-WhoIS;
-UpdateDate;
-WhoIS -> UpdateDate [weight=0];
-}

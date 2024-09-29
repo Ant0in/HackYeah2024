@@ -24,9 +24,16 @@ class LegalChecker:
             soup = BeautifulSoup(response.content, 'html.parser')
         except:
             return None
-        cgv_present = LegalChecker.checkLegalKeywords(soup=soup)
+        cgv_present: bool = LegalChecker.checkLegalKeywords(soup=soup)
+        is_https: bool = LegalChecker.check_https(url)
+        
+        score: float = 0.0
+        if cgv_present: score += 0.5
+        if is_https: score += 0.5
+        
         return {
-            "HTTPS": LegalChecker.check_https(url),
+            'score': score,
+            "HTTPS": is_https,
             "CGV - return/refund policy": cgv_present,
         }
     
