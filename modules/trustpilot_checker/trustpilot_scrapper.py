@@ -46,7 +46,7 @@ class TrustPilotScraper:
 
         if rating and rating.get_text(strip=True):
             
-            ret['note'] = round((float(rating.get_text(strip=True)) / 5) * 100, 2)
+            ret['note'] = round((float(rating.get_text(strip=True)) / 5), 2)
 
         if number_of_ratings:
             match = re.search(r'(\d{1,3}(?:,\d{3})*)', number_of_ratings.get_text(strip=True))
@@ -55,7 +55,7 @@ class TrustPilotScraper:
                 ret['ratings'] = int(number)
 
         return {
-            'score': ret['note'] / 5,
+            'score': ret['note'],
             'ratings': ret['ratings'],
         }
     
