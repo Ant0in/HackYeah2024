@@ -16,6 +16,9 @@ class Executor:
             self.results[module_name] = result
             print(f"{module_name} completed with result: {result}")
 
+        ret_dict: dict = {m: self.results[m]['score'] for m in execution_order if self.results[m].get('score')}
+        print(ret_dict)
+
 class ParallelExecutor:
     def __init__(self):
         self.results = {}
