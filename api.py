@@ -1,6 +1,7 @@
 import websockets
 import asyncio
 import json
+from websockets.asyncio.server import serve
 
 from test_main import MainPipelineHelper
 
@@ -10,7 +11,7 @@ import db
 database = db.DB("dd.db")
 main_pipeline = MainPipelineHelper()
 
-async def handler(websocket, _path):
+async def handler(websocket):
     try:
         async for message in websocket:
             data = json.loads(message)
@@ -37,11 +38,8 @@ async def handler(websocket, _path):
         print(f"Connection closed: {e}")
 
 
-async def start_server():
-    server = await websockets.serve(handler, "0.0.0.0", 8080)
-    print("WebSocket server started on 0.0.0.0:8080")
-    await server.wait_closed()
+async def main():
+    async with serve(handler, "0.0.0.0", 8080):
+        await asyncio.get_running_loop().create_future()  # run forever
 
-if __name__ == "__main__":
-    asyncio.get_event_loop().run_until_complete(start_server())
-    asyncio.get_event_loop().run_forever()
+asyncio.run(main())
