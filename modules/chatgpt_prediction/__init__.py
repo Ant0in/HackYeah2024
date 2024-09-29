@@ -28,7 +28,7 @@ class ChatGPTPrediction:
             the site appears fraudulent or secure. Based on factors such as the presence of \
             legitimate information, offers that seem too good to be true, grammar errors, \
             legal disclaimers, or dubious practices, provide a confidence score between \
-            0 (completely fraudulent) and 1 (completely secure). Respond with only a numeric score. \
+            0 (completely fraudulent) and 100 (completely secure). Respond with only a numeric score. \
             here are the page link : {self.url}, the themes : {themes} and the page content : {filtered_text}."
 
         try:
@@ -45,7 +45,7 @@ class ChatGPTPrediction:
             generated_text = completion.choices[0].message.content.strip()
             
             return {
-                'score': float(generated_text)
+                'score': float(generated_text) / 100
             }
 
         except Exception as e:
