@@ -27,7 +27,7 @@ pipeline.add_module("UpdateDate", ["WhoIS"])
 pipeline.add_module("WhoIS", [])
 
 
-url: str = 'https://www.biedronka.pl/pl'
+url: str = 'https://www.penoblode.shop/'
 
 module_list = {
     "FraudPrediction": FraudPrediction(url),
@@ -44,4 +44,5 @@ module_list = {
 
 
 executor = Executor()
-executor.run_pipeline(pipeline, module_list)
+score: float = executor.run_pipeline(pipeline, module_list)
+print(score)
