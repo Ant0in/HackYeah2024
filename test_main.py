@@ -12,11 +12,12 @@ from modules.chatgpt_prediction import ChatGPTPrediction
 
 from pipeline import Pipeline
 from executor import Executor
+from db import DB
 
 
 
 pipeline = Pipeline()
-pipeline.add_module('ChatGPTPrediction', ['HTMLTextModule', 'ThemeChecker'])
+#pipeline.add_module('ChatGPTPrediction', ['HTMLTextModule', 'ThemeChecker'])
 pipeline.add_module('FraudPrediction', [])
 pipeline.add_module('HTMLParser', [])
 pipeline.add_module('HTMLTextModule', ['HTMLParser'])
@@ -28,10 +29,10 @@ pipeline.add_module("UpdateDate", ["WhoIS"])
 pipeline.add_module("WhoIS", [])
 
 
-url: str = r'https://pl.pons.com'
+url: str = r'https://www.google.com'
 
 module_list = {
-    "ChatGPTPrediction": ChatGPTPrediction(url),
+    #"ChatGPTPrediction": ChatGPTPrediction(url),
     "FraudPrediction": FraudPrediction(url),
     "HTMLParser": HTMLParserModule(url),
     "HTMLTextModule": HTMLTextModule(url),
@@ -47,4 +48,4 @@ module_list = {
 
 executor = Executor()
 score: float = executor.run_pipeline(pipeline, module_list)
-print(score)
+DB(path='./dd.db').put_website(url=url, score=score)
