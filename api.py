@@ -11,9 +11,12 @@ from modules.html_parser import HTMLParserModule
 from modules.html_text import HTMLTextModule
 from modules.type_checker import ThemeChecker
 
+import db
+
 from pipeline import Pipeline
 from executor import Executor
 
+database = db.DB("dd.db")
 
 def run_pipeline(url):
     # pipeline = Pipeline()
@@ -46,18 +49,28 @@ def run_pipeline(url):
     return 42
 
 
-async def handler(websocket, path):
+async def handler(websocket, _path):
     try:
         async for message in websocket:
             data = json.loads(message)
             print(f"Received data: {data}")
 
-            url = data["url"]
+            if data["type"] == "request_scan":
+                url = data["url"]
+                response_data = {"type": "scan_results", "url": url , "score": run_pipeline(url)}
+            elif data["type"] == "request_cache":
+                url = data["url"]
 
-            response_data = {"type": "scan_results", "url": url , "score": run_pipeline(url)}
+                res = database.fetch_website(url)
 
+                if res == None:
+                    response_data = {"type": "cache_not_found", "url": url}
+                else:
+                    score, ts = res
+                    response_data = {"type": "cache_found", "url": url, "score": score, "ts": ts.isoformat()}
+            
             await websocket.send(json.dumps(response_data))
-            print(f"Sent response data.")
+
     except websockets.ConnectionClosed as e:
         print(f"Connection closed: {e}")
 
