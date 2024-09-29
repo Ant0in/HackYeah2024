@@ -28,8 +28,8 @@ class LegalChecker:
         is_https: bool = LegalChecker.check_https(url)
         
         score: float = 0.0
-        if cgv_present: score += 0.5
-        if is_https: score += 0.5
+        if cgv_present: score += 0.25
+        if is_https: score += 0.25
         
         return {
             'score': score,
