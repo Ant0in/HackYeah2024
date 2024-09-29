@@ -27,18 +27,9 @@ import { MutableRefObject, useEffect, useRef, useState } from "react";
 export default function () {
   const ws: MutableRefObject<WebSocket | null> = useRef(null);
   const [baseUrl, setBaseUrl] = useState("");
+  const [score, setScore] = useState(-1);
 
   useEffect(() => {
-    ws.current = new WebSocket("ws://0.0.0.0:8080");
-
-    ws.current.onmessage = (msg: MessageEvent<any>) => {
-      const data = JSON.parse(msg.data);
-
-      if (data.type === "scan_results") {
-        // read shit
-      }
-    };
-
     const getBaseUrl = async () => {
       try {
         // Query the currently active tab in the current window
@@ -61,13 +52,33 @@ export default function () {
     };
 
     getBaseUrl();
+  }, []);
+
+  useEffect(() => {
+    ws.current = new WebSocket("ws://0.0.0.0:8080");
+
+    ws.current.onopen = () => {
+      ws.current!.send(JSON.stringify({ type: "request_cache", url: baseUrl }));
+    };
+
+    ws.current.onmessage = (msg: MessageEvent<any>) => {
+      const data = JSON.parse(msg.data);
+
+      if (data.type === "scan_results") {
+        console.log(data);
+        setScore(data.score);
+      } else if (data.type == "cache_found") {
+        console.log(data);
+        setScore(data.score);
+      }
+    };
 
     return () => {
       if (ws.current) {
-        ws.current.close()
+        ws.current.close();
       }
-    }
-  }, []);
+    };
+  }, [baseUrl]);
 
   return (
     <ThemeProvider defaultTheme="light">
@@ -86,8 +97,11 @@ export default function () {
           <Card
             style={{
               backgroundImage:
-                "linear-gradient(to bottom right, rgb(182, 244, 146), rgb(255, 255, 255))",
-              // (255, 8, 0)
+                score === -1
+                  ? undefined
+                  : `linear-gradient(to bottom right, ${
+                      score < 0.5 ? "rgb(255, 8, 0)" : "rgb(182, 244, 146)"
+                    }, rgb(255, 255, 255))`,
             }}
           >
             <CardHeader>

@@ -53,8 +53,6 @@ async def handler(websocket, _path):
     try:
         async for message in websocket:
             data = json.loads(message)
-            print(f"Received data: {data}")
-
             if data["type"] == "request_scan":
                 url = data["url"]
                 response_data = {"type": "scan_results", "url": url , "score": run_pipeline(url)}
