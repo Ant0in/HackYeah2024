@@ -8,3 +8,5 @@ selenium
 python-whois
 pydot
 onnxruntime
+openai
+python-dotenv

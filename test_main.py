@@ -27,7 +27,7 @@ pipeline.add_module("UpdateDate", ["WhoIS"])
 pipeline.add_module("WhoIS", [])
 
 
-url: str = 'https://www.penoblode.shop/'
+url: str = 'https://altrashoesindia.net.in/'
 
 module_list = {
     "FraudPrediction": FraudPrediction(url),
