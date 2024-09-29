@@ -7,3 +7,4 @@ requests
 selenium
 python-whois
 pydot
+onnxruntime
