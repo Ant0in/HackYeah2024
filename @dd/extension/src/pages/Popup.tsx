@@ -22,10 +22,11 @@ import { ThemeProvider } from "@/components/theme-provider";
 
 import denisLogo from "../img/denis.png";
 import browser from "webextension-polyfill";
-import { MutableRefObject, useEffect, useRef } from "react";
+import { MutableRefObject, useEffect, useRef, useState } from "react";
 
 export default function () {
   const ws: MutableRefObject<WebSocket | null> = useRef(null);
+  const [baseUrl, setBaseUrl] = useState("");
 
   useEffect(() => {
     ws.current = new WebSocket("ws://0.0.0.0:8080");
@@ -37,6 +38,35 @@ export default function () {
         // read shit
       }
     };
+
+    const getBaseUrl = async () => {
+      try {
+        // Query the currently active tab in the current window
+        const [tab] = await browser.tabs.query({
+          active: true,
+          currentWindow: true,
+        });
+
+        console.log(tab);
+
+        if (tab && tab.url) {
+          // Create a URL object to easily extract the base URL
+          const url = new URL(tab.url);
+          // Extract the base URL (protocol + host)
+          setBaseUrl(url.host);
+        }
+      } catch (error) {
+        console.error("Failed to get the active tab's URL:", error);
+      }
+    };
+
+    getBaseUrl();
+
+    return () => {
+      if (ws.current) {
+        ws.current.close()
+      }
+    }
   }, []);
 
   return (
@@ -44,16 +74,14 @@ export default function () {
       <TooltipProvider>
         <div className="flex flex-col gap-3 m-3 h-full ">
           <Card className="p-2">
-              <CardTitle>
-                <div className="flex items-center justify-between">
-                  <span className="p-2">
-                    Denis Defend
-                  </span>
-                  <div>
-                    <img className="h-[2.5rem] w-auto" src={denisLogo} />
-                  </div>
+            <CardTitle>
+              <div className="flex items-center justify-between">
+                <span className="p-2">Denis Defend</span>
+                <div>
+                  <img className="h-[2.5rem] w-auto" src={denisLogo} />
                 </div>
-              </CardTitle>
+              </div>
+            </CardTitle>
           </Card>
           <Card
             style={{
@@ -66,8 +94,8 @@ export default function () {
               <CardTitle>
                 <Tooltip>
                   <TooltipTrigger>
-                    <div className="flex gap-2 items-center">
-                      goglle.com
+                    <div className="flex gap-2 items-center min-w-0">
+                      {baseUrl ? baseUrl : "Loading..."}
                       <CircleCheck />
                     </div>
                   </TooltipTrigger>
