@@ -29,7 +29,7 @@ pipeline.add_module("UpdateDate", ["WhoIS"])
 pipeline.add_module("WhoIS", [])
 
 
-url: str = r'https://hackyeah.pl/'
+url: str = r'https://www.google.com'
 
 module_list = {
     #"ChatGPTPrediction": ChatGPTPrediction(url),

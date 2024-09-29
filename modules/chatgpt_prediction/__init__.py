@@ -26,10 +26,10 @@ class ChatGPTPrediction:
 
         prompt: str = f"Analyze the main theme and content of this webpage, then assess whether \
             the site appears fraudulent or secure. Based on factors such as the presence of \
-            legitimate information, offers that seem too good to be true, grammar errors, \
+            legitimate information, offers that seem too good to be true (very big discounts, or discounts in general), grammar errors, \
             legal disclaimers, or dubious practices, provide a confidence score between \
             0 (completely fraudulent) and 100 (completely secure). Respond with only a numeric score. \
-            here are the page link : {self.url}, the themes : {themes} and the page content : {filtered_text}."
+            here are the page link : {self.url}, the general themes : {themes} and the page content (HTML -> Text): {filtered_text}."
 
         try:
             
