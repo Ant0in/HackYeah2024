@@ -27,6 +27,9 @@ class MediaModule:
             r"(https:\/\/)?(www\.)?facebook\.com\/[A-Za-z0-9_.]+\/?", 
             r"(https:\/\/)?(www\.)?twitter\.com\/[A-Za-z0-9_.]+\/?"
         ]
+
+        if len(link) == 0:
+            return 0.5
         
         for link in links:
             if not any(re.fullmatch(regex, link.strip()) for regex in regexes):
