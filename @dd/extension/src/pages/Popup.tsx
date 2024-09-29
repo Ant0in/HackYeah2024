@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 import { Button } from "@/components/ui/button";
-import { CircleCheck } from 'lucide-react';
+import { CircleCheck } from "lucide-react";
 import { Shield } from "lucide-react";
 import {
   Card,
@@ -11,38 +11,89 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
 import { ThemeProvider } from "@/components/theme-provider";
 
+import denisLogo from "../img/denis.png";
+import browser from "webextension-polyfill";
+import { MutableRefObject, useEffect, useRef } from "react";
+
 export default function () {
+  const ws: MutableRefObject<WebSocket | null> = useRef(null);
+
+  useEffect(() => {
+    ws.current = new WebSocket("ws://0.0.0.0:8080");
+
+    ws.current.onmessage = (msg: MessageEvent<any>) => {
+      const data = JSON.parse(msg.data);
+
+      if (data.type === "scan_results") {
+        // read shit
+      }
+    };
+  }, []);
+
   return (
     <ThemeProvider defaultTheme="light">
-      <div className="flex flex-col align-center gap-3 m-3 h-full ">
-        <h3 className="scroll-m-20 text-center text-2xl font-semibold tracking-tight">
-          Denis Defend
-        </h3>
-        <Card
-          style={{
-            backgroundImage:
-              "linear-gradient(to bottom right, rgb(182, 244, 146), rgb(255, 255, 255))",
-          }}
-        >
-          <CardHeader>
-            <CardTitle>
-              <div className="flex gap-2 align-center">
-                goglle.com
-                <CircleCheck />
-              </div>
+      <TooltipProvider>
+        <div className="flex flex-col gap-3 m-3 h-full ">
+          <Card className="p-2">
+              <CardTitle>
+                <div className="flex items-center justify-between">
+                  <span className="p-2">
+                    Denis Defend
+                  </span>
+                  <div>
+                    <img className="h-[2.5rem] w-auto" src={denisLogo} />
+                  </div>
+                </div>
               </CardTitle>
-            <CardDescription>last scan 10d ago</CardDescription>
-          </CardHeader>
-          <CardContent className="w-full">
-          </CardContent>
-          {/* <CardFooter>
+          </Card>
+          <Card
+            style={{
+              backgroundImage:
+                "linear-gradient(to bottom right, rgb(182, 244, 146), rgb(255, 255, 255))",
+              // (255, 8, 0)
+            }}
+          >
+            <CardHeader>
+              <CardTitle>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <div className="flex gap-2 items-center">
+                      goglle.com
+                      <CircleCheck />
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Trust: 85%</p>
+                  </TooltipContent>
+                </Tooltip>
+              </CardTitle>
+              <CardDescription>last scan 10d ago</CardDescription>
+            </CardHeader>
+            <CardContent className="w-full"></CardContent>
+            {/* <CardFooter>
           <p>Card Footer</p>
         </CardFooter> */}
-        </Card>
-        <Button>Rescan</Button>
-      </div>
+          </Card>
+          <Button
+            onClick={() =>
+              ws.current?.send(
+                JSON.stringify({ type: "scan_request", url: "google.com" })
+              )
+            }
+          >
+            Rescan
+          </Button>
+        </div>
+      </TooltipProvider>
     </ThemeProvider>
   );
   // return (
