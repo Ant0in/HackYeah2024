@@ -2,12 +2,12 @@
 class WeightedSum:
 
     weights: dict = {
-        'FraudPrediction': 3,
+        'FraudPrediction': 1.3,
         'LegalChecker': 1,
         'MediaModule': 2,
-        'UpdateDate': 1,
-        'ChatGPTPrediction': 2,
-        'TrustPilotChecker': 2
+        'UpdateDate': 1.3,
+        'ChatGPTPrediction': 2.2,
+        'TrustPilotChecker': 2.1
     }
 
     @staticmethod

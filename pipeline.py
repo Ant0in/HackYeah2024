@@ -34,5 +34,3 @@ class Pipeline:
 
     def to_image(self) -> None:
         nx.drawing.nx_pydot.write_dot(self.graph, r'./g.dot')
-        dot = graphviz.Digraph()
-        dot.render(r'./g.dot', r'./g.png')
