@@ -1,7 +1,10 @@
+
 import networkx as nx
+import graphviz
 
 
 class Pipeline:
+
     def __init__(self):
         self.graph = nx.DiGraph()
 
@@ -28,3 +31,8 @@ class Pipeline:
 
     def get_execution_order(self):
         return list(nx.topological_sort(self.graph))
+
+    def to_image(self) -> None:
+        nx.drawing.nx_pydot.write_dot(self.graph, r'./g.dot')
+        dot = graphviz.Digraph()
+        dot.render(r'./g.dot', r'./g.png')

@@ -11,3 +11,4 @@ websockets
 onnxruntime
 openai
 python-dotenv
+graphviz

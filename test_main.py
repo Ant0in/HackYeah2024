@@ -16,36 +16,47 @@ from db import DB
 
 
 
-pipeline = Pipeline()
-#pipeline.add_module('ChatGPTPrediction', ['HTMLTextModule', 'ThemeChecker'])
-pipeline.add_module('FraudPrediction', [])
-pipeline.add_module('HTMLParser', [])
-pipeline.add_module('HTMLTextModule', ['HTMLParser'])
-pipeline.add_module("LegalChecker", [])
-pipeline.add_module("MediaModule", ["HTMLParser"])
-pipeline.add_module("TrustPilotChecker", ["HTMLTextModule"])
-pipeline.add_module('ThemeChecker', ["HTMLTextModule"])
-pipeline.add_module("UpdateDate", ["WhoIS"])
-pipeline.add_module("WhoIS", [])
+class MainPipelineHelper:
 
+    @staticmethod
+    def execute_pipeline(url: str) -> float:
 
-url: str = r'https://www.google.com'
+        pipeline = Pipeline()
+        pipeline.add_module('ChatGPTPrediction', ['HTMLTextModule', 'ThemeChecker'])
+        pipeline.add_module('FraudPrediction', [])
+        pipeline.add_module('HTMLParser', [])
+        pipeline.add_module('HTMLTextModule', ['HTMLParser'])
+        pipeline.add_module("LegalChecker", [])
+        pipeline.add_module("MediaModule", ["HTMLParser"])
+        pipeline.add_module("TrustPilotChecker", ["HTMLTextModule"])
+        pipeline.add_module('ThemeChecker', ["HTMLTextModule"])
+        pipeline.add_module("UpdateDate", ["WhoIS"])
+        pipeline.add_module("WhoIS", [])
 
-module_list = {
-    #"ChatGPTPrediction": ChatGPTPrediction(url),
-    "FraudPrediction": FraudPrediction(url),
-    "HTMLParser": HTMLParserModule(url),
-    "HTMLTextModule": HTMLTextModule(url),
-    "LegalChecker": LegalKeywordsChecker(url),
-    "MediaModule": MediaModule(url),
-    "TrustPilotChecker": TrustPilotReviews(url),
-    "ThemeChecker": ThemeChecker(url, 'polish'),
-    "UpdateDate": UpdateDateModule(),
-    "WhoIS": WhoisLookupModule(url),
+        module_list = {
+            "ChatGPTPrediction": ChatGPTPrediction(url),
+            "FraudPrediction": FraudPrediction(url),
+            "HTMLParser": HTMLParserModule(url),
+            "HTMLTextModule": HTMLTextModule(url),
+            "LegalChecker": LegalKeywordsChecker(url),
+            "MediaModule": MediaModule(url),
+            "TrustPilotChecker": TrustPilotReviews(url),
+            "ThemeChecker": ThemeChecker(url, 'french'),
+            "UpdateDate": UpdateDateModule(),
+            "WhoIS": WhoisLookupModule(url),
+        }
 
-}
+        executor = Executor()
+        score: float = executor.run_pipeline(pipeline, module_list)
+        return score
+    
+    @staticmethod
+    def store_in_db(url: str, score: float) -> None:
+        d: DB = DB(path='./dd.db')
+        d.put_website(url=url, score=score)
 
+    @staticmethod
+    def run(url: str) -> None:
+        score: float = MainPipelineHelper.execute_pipeline(url)
+        MainPipelineHelper.store_in_db(url, score)
 
-executor = Executor()
-score: float = executor.run_pipeline(pipeline, module_list)
-DB(path='./dd.db').put_website(url=url, score=score)

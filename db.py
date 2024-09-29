@@ -56,5 +56,5 @@ class DB:
 
 if __name__ == '__main__':
 
-    url: str = 'https://www.haarweltfriseureinrichtung.shop/'
+    url: str = 'https://hackyeah.pl/'
     print(DB(path='./dd.db').fetch_website(url))
