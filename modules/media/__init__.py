@@ -29,11 +29,10 @@ class MediaModule:
         ]
 
         if len(links) == 0:
-            return 0.5
+            return {'score': 0.5}
         
         for link in links:
             if not any(re.fullmatch(regex, link.strip()) for regex in regexes):
                 return {'score': 0}
         
-        if links: return {'score': 1}
-        else: dict()
+        return {'score': 1}
