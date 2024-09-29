@@ -6,7 +6,7 @@ import os
 
 class FraudPrediction:
 
-    MODEL_PATH: str = r'C:\Users\Antoine\Desktop\HackYeah2024\modules\fraud_prediction\model.onnx'
+    MODEL_PATH: str = "./modules/fraud_prediction/model.onnx"
 
     def __init__(self, url: str) -> None:
         

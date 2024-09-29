@@ -18,7 +18,7 @@ class HTMLParserModule:
 
             # If link is relative
             if str(link["href"]).startswith("/"):
-                absolute_link = self.url + link["href"][1:]
+                absolute_link = self.url + link["href"]
                 pages_dict[absolute_link] = self.parse_page(absolute_link)
 
             if len(pages_dict) >= 10:

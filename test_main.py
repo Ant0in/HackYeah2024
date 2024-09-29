@@ -56,7 +56,9 @@ class MainPipelineHelper:
         d.put_website(url=url, score=score)
 
     @staticmethod
-    def run(url: str) -> None:
+    def run(url: str) -> float:
         score: float = MainPipelineHelper.execute_pipeline(url)
         MainPipelineHelper.store_in_db(url, score)
+
+        return score
 
