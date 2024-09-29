@@ -6,6 +6,7 @@ class WeightedSum:
         'LegalChecker': 1,
         'MediaModule': 2,
         'UpdateDate': 1.5,
+        'ChatGPTPrediction': 1
     }
 
     @staticmethod

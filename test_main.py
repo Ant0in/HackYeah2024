@@ -8,6 +8,7 @@ from modules.html_parser import HTMLParserModule
 from modules.html_text import HTMLTextModule
 from modules.type_checker import ThemeChecker
 from modules.fraud_prediction import FraudPrediction
+from modules.chatgpt_prediction import ChatGPTPrediction
 
 from pipeline import Pipeline
 from executor import Executor
@@ -15,6 +16,7 @@ from executor import Executor
 
 
 pipeline = Pipeline()
+#pipeline.add_module('ChatGPTPrediction', ['HTMLTextModule', 'ThemeChecker'])
 pipeline.add_module('FraudPrediction', [])
 pipeline.add_module('HTMLParser', [])
 pipeline.add_module('HTMLTextModule', ['HTMLParser'])
@@ -30,6 +32,7 @@ pipeline.add_module("WhoIS", [])
 url: str = 'https://altrashoesindia.net.in/'
 
 module_list = {
+    #"ChatGPTPrediction": ChatGPTPrediction(url),
     "FraudPrediction": FraudPrediction(url),
     "HTMLParser": HTMLParserModule(url),
     "HTMLTextModule": HTMLTextModule(url),
@@ -40,6 +43,7 @@ module_list = {
     "ThemeChecker": ThemeChecker(url, 'polish'),
     "UpdateDate": UpdateDateModule(),
     "WhoIS": WhoisLookupModule(url),
+
 }
 
 
