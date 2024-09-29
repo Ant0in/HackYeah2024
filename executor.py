@@ -27,9 +27,10 @@ class Executor:
         return WeightedSum.calculateWeightedSum(scores=exec_scores)
 
 class ParallelExecutor:
-    def __init__(self):
-        self.results = {}
 
+    def __init__(self):
+    
+        self.results = {}
 
     def run_pipeline(self,  pipeline, modules):
         ready_modules = pipeline.get_initial_modules()
