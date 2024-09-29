@@ -5,8 +5,9 @@ class WeightedSum:
         'FraudPrediction': 3,
         'LegalChecker': 1,
         'MediaModule': 2,
-        'UpdateDate': 1.5,
-        'ChatGPTPrediction': 1
+        'UpdateDate': 1,
+        'ChatGPTPrediction': 2,
+        'TrustPilotChecker': 2
     }
 
     @staticmethod

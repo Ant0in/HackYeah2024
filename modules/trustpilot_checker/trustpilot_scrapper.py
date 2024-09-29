@@ -31,7 +31,7 @@ class TrustPilotScraper:
             response.raise_for_status()  # Lève une exception pour les codes d'état HTTP 4xx/5xx
         except requests.RequestException as e:
             print(f"Error fetching data from Trustpilot: {e}")
-            return None
+            return dict()
 
         soup = BeautifulSoup(response.content, 'html.parser')
         return TrustPilotScraper._extract_rating_info(soup)
@@ -39,7 +39,7 @@ class TrustPilotScraper:
     @staticmethod
     def _extract_rating_info(soup: BeautifulSoup) -> Dict[str, Optional[int]]:
         
-        ret: Dict[str, Optional[int]] = {'note': 0.5, 'ratings': 0}
+        ret: Dict[str, Optional[int]] = {'note': 2.5, 'ratings': 1}
 
         rating = soup.select_one('#business-unit-title > div > div > p')
         number_of_ratings = soup.select_one('#business-unit-title > span.styles_clickable__zQWyh > span')
@@ -54,7 +54,10 @@ class TrustPilotScraper:
                 number = match.group(1).replace(',', '')
                 ret['ratings'] = int(number)
 
-        return ret
+        return {
+            'score': ret['note'] / 5,
+            'ratings': ret['ratings'],
+        }
     
 
 if __name__ == '__main__':
