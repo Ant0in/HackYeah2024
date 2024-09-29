@@ -34,5 +34,6 @@ class MediaModule:
         for link in links:
             if not any(re.fullmatch(regex, link.strip()) for regex in regexes):
                 return {'score': 0}
-            
-        return {'score': 1}
+        
+        if links: return {'score': 1}
+        else: dict()

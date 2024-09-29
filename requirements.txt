@@ -9,3 +9,5 @@ python-whois
 pydot
 websockets
 onnxruntime
+openai
+python-dotenv
