@@ -92,7 +92,7 @@ export default function () {
   }, []);
 
   useEffect(() => {
-    ws.current = new WebSocket("ws://0.0.0.0:8080");
+    ws.current = new WebSocket("ws://91.86.43.9:8080");
 
     ws.current.onopen = () => {
       ws.current!.send(
