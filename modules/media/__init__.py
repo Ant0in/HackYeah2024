@@ -28,7 +28,7 @@ class MediaModule:
             r"(https:\/\/)?(www\.)?twitter\.com\/[A-Za-z0-9_.]+\/?"
         ]
 
-        if len(link) == 0:
+        if len(links) == 0:
             return 0.5
         
         for link in links:
